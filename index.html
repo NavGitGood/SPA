@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="style/modal.css">
+    <link rel="stylesheet" href="style/datepicker.css">
+</head>
+
+<body onload="showModal()">
+    <div>
+        <button type="button" onclick="showModal()">Open Modal</button>
+    </div>
+    
+    <div id="id01" class="modal">
+
+        <form class="modal-content animate" onsubmit="return saveState()">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                    title="Close Modal">&times;</span>
+                <img src="resources/icon_form1.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label for="uname"><b>Monthly Income</b></label>
+                <input type="text" placeholder="Enter Monthly Income" name="uname" required>
+
+                <label for="psw"><b>Budget Ending Date</b></label>
+                <input type="text" placeholder="Enter Budget Ending Date" readonly class="datepicker" name="psw" required>
+
+                <button type="submit">Submit</button>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <script src="scripts/baseScript.js"></script>
+</body>
+
+</html>
