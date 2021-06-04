@@ -1,0 +1,89 @@
+/* datepicker css */
+
+.ui-datepicker {
+    background: #000000; /* Old browsers */
+    background: #000000 -moz-linear-gradient(top, #fcfcfc 0%, #fff 100%); /* FF3.6+ */
+    background: #000000 -webkit-gradient(linear, left top, left bottom, color- 
+    stop(0%,#000000)), color-stop(100%,#34495e); /* Chrome,Safari4+ */
+    background: #000000 -webkit-linear-gradient(top,#000000 0%, #34495e 100%); /* 
+    Chrome10+,Safari5.1+ */
+    background: #000000 -o-linear-gradient(top,#000000 0%, #34495e 100%); /* Opera11.10+ 
+    */
+    background: #000000 -ms-linear-gradient(top,#000000 0%, #34495e 100%); /* IE10+ */
+    background: #000000 linear-gradient(top,#000000 0%, #34495e 100%); /* W3C */
+    font-size:11px;
+    padding:10px;
+    border:1px solid #5BFEC8;
+    width: 300px;
+    }
+    
+    .ui-datepicker table td {
+    text-align:center;
+    }
+    
+    .ui-datepicker a {
+    cursor:pointer;
+    text-decoration:none;
+    }
+    
+    .ui-datepicker-prev {
+    }
+    
+    .ui-datepicker-next {
+    float:right;
+    }
+    
+    .ui-datepicker-title {
+    text-align: center;
+    font-weight:bold;
+    }
+    
+    .ui-widget.ui-widget-content{
+        border: 2px solid #5BFEC8;
+    }
+    
+    .ui-datepicker th {
+        padding: .7em .3em;
+        text-align: center;
+        font-weight: bold;
+        border: 0;
+        color: #5BFEC8;
+    }
+    
+    .ui-state-default,
+    .ui-widget-content .ui-state-default,
+    .ui-widget-header .ui-state-default{
+        border: 1px solid #5bfec8;
+        background: #000000;
+        font-weight: normal;
+        color: #5bfec8;
+    }
+    
+    a.ui-state-default:hover{
+        border: 1px solid white;
+        background: #5bfec8;
+        font-weight: bold;
+        color: black;
+    }
+    
+    .ui-state-active, .ui-widget-content .ui-state-active,
+    .ui-widget-header .ui-state-active {
+        border: 1px solid white;
+        background: #5bfec8;
+        font-weight: bold;
+        color: black;
+    }
+    
+    .ui-state-highlight,
+    .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+        border: 1px solid #dad55e;
+        background: #fffa90;
+        color: black;
+    }
+    
+    .ui-widget-header {
+        border: 1px solid #5bfec8;
+        background: #080808;
+        color: #5bfec8;
+        font-weight: bold;
+    }
