@@ -6,14 +6,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="style/modal.css">
+    <link rel="stylesheet" href="style/popup-modal.css">
+    <link rel="stylesheet" href="style/base-modal.css">
 </head>
 
 <body onload="showModal()">
+
     <div>
         <button type="button" onclick="showModal()">Open Modal</button>
     </div>
-    
+
     <div id="id01" class="modal">
 
         <form class="modal-content animate" onsubmit="return saveState()">
@@ -28,7 +30,9 @@
                 <input type="text" placeholder="Enter Monthly Income" name="uname" required>
 
                 <label for="psw"><b>Budget Ending Date</b></label>
-                <input type="text" placeholder="Enter Budget Ending Date" readonly class="datepicker" name="psw" required>
+                <input type="text" placeholder="Enter Budget Ending Date" readonly class="datepicker" name="psw"
+                    required>
+
 
                 <button type="submit">Submit</button>
             </div>
@@ -39,6 +43,40 @@
             </div>
         </form>
     </div>
+
+    <article class="leaderboard">
+        <header>
+            <h1 class="leaderboard__title"><span class="leaderboard__title--top">Forbes</span><span
+                    class="leaderboard__title--bottom">Leaderboard</span></h1>
+        </header>
+
+        <main class="list_items">
+            <article class="list_item">
+                <img src="resources/budget.jpg" alt="Budget" class="list_item_picture">
+                <span class="list_name">Budget</span>
+                <span class="list_value" id="budget">0.00</span>
+            </article>
+
+            <article class="list_item">
+                <img src="resources/expenses.png" alt="Expenses" class="list_item_picture">
+                <span class="list_name">Expenses</span>
+                <span class="list_value" id="expenses">0.00</span>
+            </article>
+
+            <article class="list_item">
+                <img src="resources/balance.jpg" alt="Balance" class="list_item_picture">
+                <span class="list_name">Balance</span>
+                <span class="list_value" id="balance">0.00</span>
+            </article>
+
+            <article class="list_item">
+                <img src="resources/savings.png" alt="Savings" class="list_item_picture">
+                <span class="list_name">Savings</span>
+                <span class="list_value" id="savings">0.00</span>
+            </article>
+        </main>
+    </article>
+
     <script src="scripts/baseScript.js"></script>
 </body>
 

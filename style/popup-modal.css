@@ -36,7 +36,7 @@
     cursor: pointer;
   }
 
-  input[type=text], input[type=password] {
+input[type=text]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -77,11 +77,6 @@ button:hover {
     padding: 16px;
   }
   
-  span.psw {
-    float: right;
-    padding-top: 16px;
-  }
-  
 img.avatar {
     width: 40%;
     border-radius: 50%;
@@ -105,18 +100,7 @@ img.avatar {
   
   /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
-    span.psw {
-       display: block;
-       float: none;
-    }
     .cancelbtn {
        width: 100%;
     }
 }
-  
-
-
-
-
-
-
