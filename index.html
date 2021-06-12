@@ -24,7 +24,149 @@
         <button type="button" onclick="showExpensesForm()">Add Expense</button>
     </div>
 
-    <article class="leaderboard">
+    <div id="income_form_div" class="container form-div">
+        <form id="income_form" class="modal-content animate" onsubmit="return saveIncomeFormState()">
+            <div class="form-row top2">
+                <div class="col">
+                    <span onclick="document.getElementById('income_form_div').style.display='none'" class="close"
+                        title="Close Modal">&times;</span>
+                </div>
+            </div>
+            <div class="form-row form-title center">
+                <div class="col">
+                    <h2>Income Form</h2>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="imgcontainer">
+                        <img src="resources/income_form.png" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="monthlyIncome">Monthly Income</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Enter Monthly Income" id="monthlyIncome"
+                        name="monthlyIncome" required>
+                </div>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="budgetDate">Budget Date</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control datepicker" id="budgetDate" readonly
+                        placeholder="Select Budget Date" name="budgetDate" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+
+    <div id="expenses_form_div" class="container form-div">
+        <form id="expenses_form" class="modal-content animate" onsubmit="return saveExpensesFormState()">
+            <div class="form-row top2">
+                <div class="col">
+                    <span onclick="document.getElementById('expenses_form_div').style.display='none'" class="close"
+                        title="Close Modal">&times;</span>
+                </div>
+            </div>
+            <div class="form-row form-title center">
+                <div class="col">
+                    <h2>Expenses Form</h2>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="imgcontainer">
+
+                        <img src="resources/expenses_form.png" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="inputEmail">Budget Description</label>
+                </div>
+                <div class="col">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="expenseCategory">Expense Category</label>
+                </div>
+                <div class="col">
+                    <select class="form-control" id="expenseCategory" name="expenseCategory" required>
+                        <option value="" disabled selected>Select Expense Category</option>
+                        <option>Fixed</option>
+                        <option>Variable</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row top2 d-none" id="fixedExpenseTypeDiv">
+                <div class="col-3">
+                    <label for="fixedExpenseType">Fixed Expense Type</label>
+                </div>
+                <div class="col">
+                    <select class="form-control" id="fixedExpenseType" name="fixedExpenseType" required>
+                        <option value="" disabled selected>Select Fixed Expense Type</option>
+                        <option>Rent</option>
+                        <option>EMI</option>
+                        <option>Grocery</option>
+                        <option>Bills</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row top2 d-none" id="variableExpenseTypeDiv">
+                <div class="col-3">
+                    <label for="variableExpenseType">Variable Expense Type</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" id="variableExpenseType" placeholder="Variable Expense Type"
+                        name="variableExpenseType">
+                </div>
+            </div>
+
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="expenseAmount">Expense Amount</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Enter Expense Amount" id="expenseAmount"
+                        name="expenseAmount" required>
+                </div>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="expenseDate">Expense Date</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control datepicker" id="expenseDate" readonly
+                        placeholder="Select Expense Date" name="expenseDate" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+
+    <article class="leaderboard base-div">
         <header>
             <h1 class="leaderboard__title"><span class="leaderboard__title--top">Forbes</span><span
                     class="leaderboard__title--bottom">Leaderboard</span></h1>
@@ -57,28 +199,9 @@
         </main>
     </article>
 
-
-
     <script src="scripts/baseScript.js"></script>
+    <script src="scripts/expensesScript.js"></script>
+    <script src="scripts/incomeScript.js"></script>
 </body>
 
 </html>
-
-<!-- to load html files in main html -->
-
-<!-- <html> 
-  <head> 
-    <script src="jquery.js"></script> 
-    <script> 
-    $(function(){
-      $("#DivContent").load("another_file.html"); 
-    });
-    </script> 
-  </head> 
-
-  <body> 
-     <div id="DivContent"></div>
-  </body> 
-</html> -->
-
-<!-- $("#DivContent").load("yourFile.html") -->
