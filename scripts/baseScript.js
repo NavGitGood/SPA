@@ -1,6 +1,6 @@
 let modal = document.getElementById('id01');
 
-function showModal() {
+function showForm1() {
     modal.style.display = "block";
     modal.style.width = "auto";
     sessionStorage.setItem("monthlyIncome", "0");
@@ -37,19 +37,10 @@ function getCalculations() {
     return false;
 }
 
-function saveState() {
-    sessionStorage.setItem("monthlyIncome", document.getElementsByName("uname")[0].value);
-    sessionStorage.setItem("bed", document.getElementsByName("psw")[0].value);
-    console.log(sessionStorage.getItem("monthlyIncome"));
-    console.log(sessionStorage.getItem("bed"));
-    modal.style.display = "none";
-    return false;
-}
-
 $('.datepicker').datepicker({
     minDate : '+1D'
 });
 
-setInterval(function () {
-    getCalculations();
-}, 1000);
+// setInterval(function () {
+//     getCalculations();
+// }, 1000);
