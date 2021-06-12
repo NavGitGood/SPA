@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style/popup-modal.css">
+    <link rel="stylesheet" href="style/base-modal.css">
+    <link rel="stylesheet" href="style/expenses-form.css">
+</head>
+
+<body>
+    <div id="income_form_div" class="container form-div">
+        <form id="income_form" class="modal-content animate" onsubmit="return saveIncomeFormState()">
+            <div class="form-row top2">
+                <div class="col">
+                    <span onclick="document.getElementById('income_form_div').style.display='none'"
+                        class="close" title="Close Modal">&times;</span>
+                </div>
+            </div>
+            <div class="form-row form-title center">
+                <div class="col">
+                    <h2>Income Form</h2>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="imgcontainer">
+                        <img src="resources/income_form.png" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="monthlyIncome">Monthly Income</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Enter Monthly Income" id="monthlyIncome"
+                        name="monthlyIncome" required>
+                </div>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="budgetDate">Budget Date</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control datepicker" id="budgetDate" readonly
+                        placeholder="Select Budget Date" name="budgetDate" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+
+    <script src="scripts/baseScript.js"></script>
+    <!-- <script src="scripts/expensesScript.js"></script> -->
+    <script src="scripts/incomeScript.js"></script>
+</body>
+
+</html>

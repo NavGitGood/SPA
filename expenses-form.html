@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style/popup-modal.css">
+    <link rel="stylesheet" href="style/base-modal.css">
+    <link rel="stylesheet" href="style/expenses-form.css">
+</head>
+
+<body>
+    <div id="expenses_form_div" class="container form-div">
+        <form id="expenses_form" class="modal-content animate" onsubmit="return saveExpensesFormState()">
+            <div class="form-row top2">
+                <div class="col">
+                    <span onclick="document.getElementById('expenses_form_div').style.display='none'"
+                        class="close" title="Close Modal">&times;</span>
+                </div>
+            </div>
+            <div class="form-row form-title center">
+                <div class="col">
+                    <h2>Expenses Form</h2>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="imgcontainer">
+
+                        <img src="resources/expenses_form.png" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <h2></h2>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="inputEmail">Budget Description</label>
+                </div>
+                <div class="col">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="expenseCategory">Expense Category</label>
+                </div>
+                <div class="col">
+                    <select class="form-control" id="expenseCategory" name="expenseCategory" required>
+                        <option value="" disabled selected>Select Expense Category</option>
+                        <option>Fixed</option>
+                        <option>Variable</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row top2 d-none" id="fixedExpenseTypeDiv">
+                <div class="col-3">
+                    <label for="fixedExpenseType">Fixed Expense Type</label>
+                </div>
+                <div class="col">
+                    <select class="form-control" id="fixedExpenseType" name="fixedExpenseType" required>
+                        <option value="" disabled selected>Select Fixed Expense Type</option>
+                        <option>Rent</option>
+                        <option>EMI</option>
+                        <option>Grocery</option>
+                        <option>Bills</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row top2 d-none" id="variableExpenseTypeDiv">
+                <div class="col-3">
+                    <label for="variableExpenseType">Variable Expense Type</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" id="variableExpenseType" placeholder="Variable Expense Type"
+                        name="variableExpenseType">
+                </div>
+            </div>
+
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="expenseAmount">Expense Amount</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Enter Expense Amount" id="expenseAmount"
+                        name="expenseAmount" required>
+                </div>
+            </div>
+            <div class="form-row top2">
+                <div class="col-3">
+                    <label for="expenseDate">Expense Date</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control datepicker" id="expenseDate" readonly
+                        placeholder="Select Expense Date" name="expenseDate" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+
+    <script src="scripts/baseScript.js"></script>
+    <script src="scripts/expensesScript.js"></script>
+    <!-- <script src="scripts/incomeScript.js"></script> -->
+</body>
+
+</html>
