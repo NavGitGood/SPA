@@ -1,10 +1,11 @@
 let modal = document.getElementById('id01');
 
-function showForm1() {
-    modal.style.display = "block";
-    modal.style.width = "auto";
-    sessionStorage.setItem("monthlyIncome", "0");
-    sessionStorage.setItem("bed", "0");
+function showIncomeForm() {
+    document.getElementById('income_form_div').style.display = "block";
+}
+
+function showExpensesForm() {
+    document.getElementById('expenses_form_div').style.display = "block";
 }
 
 function myFunction2() {
@@ -41,6 +42,6 @@ $('.datepicker').datepicker({
     minDate : '+1D'
 });
 
-// setInterval(function () {
-//     getCalculations();
-// }, 1000);
+setInterval(function () {
+    getCalculations();
+}, 1000);
