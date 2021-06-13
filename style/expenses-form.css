@@ -38,3 +38,15 @@ form {
   display: grid;
   place-items: center;
 }
+
+.table-div {
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  width: 80%;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  display: none;
+}
