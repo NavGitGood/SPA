@@ -3,8 +3,24 @@ let fixedExpenseType = document.getElementById('fixedExpenseType');
 let variableExpenseType = document.getElementById('variableExpenseType');
 let expensesData = [];
 
+function getTotalExpense() {
+    return JSON.parse(sessionStorage.getItem("expensesData"))
+    .reduce((sum, record) => sum + parseFloat(record.expenseAmount), 0);
+}
+
 function sortOnExpenseDate(dataToPopulate) {
     return dataToPopulate.sort((a, b) => new Date(b.expenseDate).getTime() - new Date(a.expenseDate).getTime());
+}
+
+function updateExpenseAmount(amount, id) {
+    let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"));
+    dataToUpdate = dataToUpdate.map(record => {
+        if (record.id.toString() === id.toString()) {
+            record.expenseAmount = amount;
+        }
+        return record;
+    });
+    sessionStorage.setItem("expensesData", JSON.stringify(dataToUpdate));
 }
 
 function populateExpensesList() {
@@ -13,14 +29,18 @@ function populateExpensesList() {
         return false;
     }
     let dataToPopulate = sortOnExpenseDate(JSON.parse(sessionStorage.getItem("expensesData")));
-    $("table.order-list").empty();
+    $("table.order-list tbody").empty();
     dataToPopulate.forEach(dataRow => {
         let newRow = $("<tr>");
         let cols = "";
         cols += `<td>${dataRow.expenseType}</td>`;
-        cols += `<td>${dataRow.expenseAmount}</td>`;
+        cols += `<td><input type="text" class="no-edit" id="${dataRow.id}" name="expenseAmount" value="${dataRow.expenseAmount}" onchange="updateExpenseAmount(this.value, this.id)" readonly></td>`;
         cols += `<td>${dataRow.expenseDate}</td>`;
-        cols += `<td><input type="button" class="ibtnDel btn btn-md btn-danger" id="${dataRow.id}" value="Delete"></td>`;
+        if (dataRow.expenseCategory === "Fixed") {
+            cols += `<td><input type="button" class="ibtnDel btn btn-md btn-light" id="${dataRow.id}" disabled value="Delete"></td>`;
+        } else {
+            cols += `<td><input type="button" class="ibtnDel btn btn-md btn-danger" id="${dataRow.id}" value="Delete"></td>`;
+        }
         newRow.append(cols);
         $("table.order-list").append(newRow);
     });
@@ -28,7 +48,7 @@ function populateExpensesList() {
 }
 
 function showExpensesList() {
-    if(!populateExpensesList()) {
+    if (!populateExpensesList()) {
         alert("No Expenses Added!")
     }
     else {
@@ -38,15 +58,18 @@ function showExpensesList() {
 
 function saveExpensesFormState() {
     let expenseData = {
+        "expenseCategory": "",
         "expenseAmount": "",
         "expenseDate": "",
         "expenseType": "",
         "id": Date.now()
     };
+    sessionStorage.setItem("expenseCategory", document.getElementById("expenseCategory").value);
     sessionStorage.setItem("expenseAmount", document.getElementById("expenseAmount").value);
     sessionStorage.setItem("expenseDate", document.getElementById("expenseDate").value);
     expenseData.expenseAmount = document.getElementById("expenseAmount").value;
     expenseData.expenseDate = document.getElementById("expenseDate").value;
+    expenseData.expenseCategory = document.getElementById("expenseCategory").value;
     if (!document.getElementById("variableExpenseTypeDiv").classList.contains("d-none")) {
         sessionStorage.setItem("variableExpenseType", document.getElementById("variableExpenseType").value);
         expenseData.expenseType = document.getElementById("variableExpenseType").value;
@@ -59,6 +82,7 @@ function saveExpensesFormState() {
     sessionStorage.setItem("expensesData", JSON.stringify(expensesData));
     console.log(sessionStorage.getItem("expensesData"));
     document.getElementById("expenses_form_div").style.display = "none";
+
     return false;
 }
 
@@ -72,12 +96,16 @@ function showExpenseType() {
         case 'Variable':
             document.getElementById("variableExpenseTypeDiv").classList.remove("d-none");
             document.getElementById("fixedExpenseTypeDiv").classList.add("d-none");
-            document.getElementById("variableExpenseTypeDiv").required = true;
+            document.getElementById("variableExpenseType").required = true;
+            document.getElementById("fixedExpenseType").required = false;
+
             break;
         case 'Fixed':
             document.getElementById("fixedExpenseTypeDiv").classList.remove("d-none");
             document.getElementById("variableExpenseTypeDiv").classList.add("d-none");
-            document.getElementById("variableExpenseTypeDiv").removeAttribute("required");
+            // document.getElementById("variableExpenseTypeDiv").removeAttribute("required");
+            document.getElementById("variableExpenseType").required = false;
+            document.getElementById("fixedExpenseType").required = true;
             break;
     }
 }
@@ -104,3 +132,23 @@ $("table.order-list").on("click", ".ibtnDel", function (event) {
 
 expenseCategory.addEventListener('change', showExpenseType, false);
 fixedExpenseType.addEventListener('change', saveFixedExpenseType, false);
+
+$(document).keyup(function (e) {
+    if (e.keyCode == 27) { // escape key maps to keycode `27`
+        //also check here some another stuff like menu already opend or not
+        $("div#expenses_list_div").hide();
+    }
+});
+
+$("table.order-list").on("focus", "input", function () {
+    $(this)
+        .prop("readonly", false)
+        .removeClass("no-edit");
+});
+
+$("table.order-list").on("blur", "input", function () {
+    $(this)
+        .prop("readonly", true)
+        .addClass("no-edit")
+        .siblings("span").text($(this).val());
+});
