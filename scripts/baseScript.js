@@ -26,9 +26,12 @@ $(document).ready(function () {
 });
 
 function getCalculations() {
+    let expenses = 0;
+    if (sessionStorage.getItem("expensesData") !== null && JSON.parse(sessionStorage.getItem("expensesData")).length) {
+        expenses = getTotalExpense();
+    }
     let income = sessionStorage.getItem("monthlyIncome");
     let budget = (income * 4) / 5;
-    let expenses = 0;
     let balance = budget - expenses;
     let savings = income - expenses;
     document.getElementById("budget").innerHTML = budget.toString();
@@ -38,7 +41,7 @@ function getCalculations() {
     return false;
 }
 
-$('.datepicker').datepicker({
+$('.datepicker#budgetDate').datepicker({
     minDate : '+1D'
 });
 
