@@ -20,12 +20,6 @@
     <div>
         <button type="button" onclick="showIncomeForm()">Add Income</button>
     </div>
-    <div>
-        <button type="button" onclick="showExpensesForm()">Add Expense</button>
-    </div>
-    <div>
-        <button type="button" onclick="showExpensesList()">Show Expenses</button>
-    </div>
 
     <div id="income_form_div" class="container form-div">
         <form id="income_form" class="modal-content animate" onsubmit="return saveIncomeFormState()">
@@ -58,7 +52,7 @@
                     <label for="monthlyIncome">Monthly Income</label>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Enter Monthly Income" id="monthlyIncome"
+                    <input type="number" step="any" min="0" class="form-control" placeholder="Enter Monthly Income" id="monthlyIncome"
                         name="monthlyIncome" required>
                 </div>
             </div>
@@ -67,8 +61,8 @@
                     <label for="budgetDate">Budget Date</label>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control datepicker future-date" id="budgetDate" onkeypress="return false;"
-                        placeholder="Select Budget Date" name="budgetDate" required>
+                    <input type="text" class="form-control datepicker future-date" id="budgetDate"
+                        onkeypress="return false;" placeholder="Select Budget Date" name="budgetDate" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -152,7 +146,7 @@
                     <label for="expenseAmount">Expense Amount</label>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Enter Expense Amount" id="expenseAmount"
+                    <input type="number" step="any" min="0" class="form-control" placeholder="Enter Expense Amount" id="expenseAmount"
                         name="expenseAmount" required>
                 </div>
             </div>
@@ -169,53 +163,7 @@
         </form>
     </div>
 
-    <!-- <div class="container"> -->
-    <!-- <div class="form-row top2">
-            <div class="col"> -->
-    <article class="leaderboard base-div">
-        <header>
-            <h1 class="leaderboard__title"><span class="leaderboard__title--top">Forbes</span><span
-                    class="leaderboard__title--bottom">Leaderboard</span></h1>
-        </header>
-
-        <main class="list_items">
-            <article class="list_item">
-                <img src="resources/budget.jpg" alt="Budget" class="list_item_picture">
-                <span class="list_name">Budget</span>
-                <span class="list_value" id="budget">0.00</span>
-            </article>
-
-            <article class="list_item">
-                <img src="resources/expenses.png" alt="Expenses" class="list_item_picture">
-                <span class="list_name">Expenses</span>
-                <span class="list_value" id="expenses">0.00</span>
-            </article>
-
-            <article class="list_item">
-                <img src="resources/balance.jpg" alt="Balance" class="list_item_picture">
-                <span class="list_name">Balance</span>
-                <span class="list_value" id="balance">0.00</span>
-            </article>
-
-            <article class="list_item">
-                <img src="resources/savings.png" alt="Savings" class="list_item_picture">
-                <span class="list_name">Savings</span>
-                <span class="list_value" id="savings">0.00</span>
-            </article>
-        </main>
-    </article>
-    <!-- </div>
-        </div> -->
-
-    <!-- <div class="form-row top2">
-            <div class="col"> -->
     <div id="expenses_list_div" class="table-div animate">
-        <div class="form-row top2">
-            <div class="col">
-                <span onclick="document.getElementById('expenses_list_div').style.display='none'" class="close"
-                    title="Close Modal">&times;</span>
-            </div>
-        </div>
         <div class="form-row top2">
             <div class="col">
                 <table id="expenses_list" class="table table-striped order-list">
@@ -243,9 +191,75 @@
         </div>
 
     </div>
-    <!-- </div>
-        </div> -->
-    <!-- </div> -->
+
+    <div class="container">
+        <div class="form-row top2">
+            <div class="col">
+                <article class="leaderboard base-div">
+                    <header>
+                        <h1 class="leaderboard__title"><span class="leaderboard__title--top">Forbes</span><span
+                                class="leaderboard__title--bottom">Leaderboard</span></h1>
+                    </header>
+
+                    <main class="list_items">
+                        <article class="list_item">
+                            <img src="resources/budget.jpg" alt="Budget" class="list_item_picture">
+                            <span class="list_name">Budget</span>
+                            <span class="list_value" id="budget">0.00</span>
+                        </article>
+
+                        <article class="list_item">
+                            <img src="resources/expenses.png" alt="Expenses" class="list_item_picture">
+                            <span class="list_name">Expenses</span>
+                            <span class="list_value" id="expenses">0.00</span>
+                        </article>
+
+                        <article class="list_item">
+                            <img src="resources/balance.jpg" alt="Balance" class="list_item_picture">
+                            <span class="list_name">Balance</span>
+                            <span class="list_value" id="balance">0.00</span>
+                        </article>
+
+                        <article class="list_item">
+                            <img src="resources/savings.png" alt="Savings" class="list_item_picture">
+                            <span class="list_name">Savings</span>
+                            <span class="list_value" id="savings">0.00</span>
+                        </article>
+                    </main>
+                </article>
+            </div>
+        </div>
+        <div class="form-row top5">
+            <div class="col">
+                <div id="expenses_base_list_div" class="base-table-div animate">
+                    <table id="expenses_base_list" class="table table-striped order-list">
+                        <thead>
+                            <tr>
+                                <th class="th-sm" scope="col">Type</th>
+                                <th class="th-sm" scope="col">Amount</th>
+                                <th class="th-sm" scope="col">Date</th>
+                                <th class="th-sm" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <input type="button" class="btn btn-lg btn-block" id="viewall" value="View All" />
+                                </td>
+                                <td style="text-align: left;">
+                                    <input type="button" class="btn btn-lg btn-block" id="addExpense" onclick="showExpensesForm()" value="Add Expense" />
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="scripts/baseScript.js"></script>
     <script src="scripts/expensesScript.js"></script>
