@@ -21,6 +21,7 @@ function updateExpenseAmount(amount, id) {
         return record;
     });
     sessionStorage.setItem("expensesData", JSON.stringify(dataToUpdate));
+    updateBaseExpenseList();
 }
 
 function populateExpensesList() {
@@ -44,6 +45,7 @@ function populateExpensesList() {
         newRow.append(cols);
         $("table.order-list").append(newRow);
     });
+    keepTop5InBaseExpenseList();
     return true
 }
 
@@ -54,6 +56,19 @@ function showExpensesList() {
     else {
         document.getElementById('expenses_list_div').style.display = "block";
     }
+}
+
+function keepTop5InBaseExpenseList() {
+    document.getElementById("expenses_base_list")
+    if ($("#expenses_base_list > tbody > tr").length > 5) {
+        $("#expenses_base_list > tbody > tr").slice(5).remove();
+    }
+}
+
+function updateBaseExpenseList() {
+    populateExpensesList();
+    // expenses_base_list
+    // keepTop5InBaseExpenseList();
 }
 
 function saveExpensesFormState() {
@@ -82,7 +97,7 @@ function saveExpensesFormState() {
     sessionStorage.setItem("expensesData", JSON.stringify(expensesData));
     console.log(sessionStorage.getItem("expensesData"));
     document.getElementById("expenses_form_div").style.display = "none";
-
+    updateBaseExpenseList();
     return false;
 }
 
@@ -151,4 +166,8 @@ $("table.order-list").on("blur", "input", function () {
         .prop("readonly", true)
         .addClass("no-edit")
         .siblings("span").text($(this).val());
+});
+
+$("#viewall").on("click", function () {
+    showExpensesList();
 });
