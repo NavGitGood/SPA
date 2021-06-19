@@ -1,7 +1,17 @@
 let modal = document.getElementById('id01');
+// let isLoaded = false;
+
+function openBudgetForm() {
+    document.getElementById('budget_form_div').style.display = "block";
+    document.getElementById('budgetValue').value = document.getElementById("budget").innerHTML;
+}
 
 function showIncomeForm() {
-    document.getElementById('income_form_div').style.display = "block";
+    // console.log(isLoaded);
+    // if (!isLoaded) {
+    //     isLoaded = true;
+        document.getElementById('income_form_div').style.display = "block";
+    // }
 }
 
 function showExpensesForm() {
@@ -27,11 +37,17 @@ $(document).ready(function () {
 
 function getCalculations() {
     let expenses = 0;
+    // let budget = 0;
     if (sessionStorage.getItem("expensesData") !== null && JSON.parse(sessionStorage.getItem("expensesData")).length) {
         expenses = getTotalExpense();
     }
     let income = sessionStorage.getItem("monthlyIncome");
-    let budget = (income * 4) / 5;
+    // if (sessionStorage.getItem("budgetValue") !== null) {
+    let budget = parseFloat(sessionStorage.getItem("budgetValue"));
+    // }
+    // else {
+    //     budget = (income * 4) / 5;
+    // }
     let balance = budget - expenses;
     let savings = income - expenses;
     document.getElementById("budget").innerHTML = budget.toString();
