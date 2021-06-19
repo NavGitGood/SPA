@@ -4,8 +4,13 @@ let variableExpenseType = document.getElementById('variableExpenseType');
 let expensesData = [];
 
 function getTotalExpense() {
-    return JSON.parse(sessionStorage.getItem("expensesData"))
-    .reduce((sum, record) => sum + parseFloat(record.expenseAmount), 0);
+    if (sessionStorage.getItem("expensesData") !== null && JSON.parse(sessionStorage.getItem("expensesData")).length) {
+        return JSON.parse(sessionStorage.getItem("expensesData"))
+        .reduce((sum, record) => sum + parseFloat(record.expenseAmount), 0);
+    }
+    else {
+        return 0;
+    }
 }
 
 function sortOnExpenseDate(dataToPopulate) {
@@ -71,38 +76,81 @@ function updateBaseExpenseList() {
     // keepTop5InBaseExpenseList();
 }
 
+function expenseValidator() {
+    let expenseAmount = parseFloat(document.getElementById("expenseAmount").value);
+    let budgetValue = parseFloat(sessionStorage.getItem("budgetValue"));
+    if(expenseAmount > budgetValue) {
+        alert("expense should be less than budget");
+        return false;
+    }
+    if (sessionStorage.getItem("expensesData") === null || !JSON.parse(sessionStorage.getItem("expensesData")).length) {
+        let totalExpenseIfSaved = getTotalExpense() + expenseAmount;
+        if(totalExpenseIfSaved > budgetValue) {
+            alert("expense should be less than budget");
+            return false;
+        }
+    }
+    return true;
+}
+
 function saveExpensesFormState() {
-    let expenseData = {
-        "expenseCategory": "",
-        "expenseAmount": "",
-        "expenseDate": "",
-        "expenseType": "",
-        "id": Date.now()
-    };
-    sessionStorage.setItem("expenseCategory", document.getElementById("expenseCategory").value);
-    sessionStorage.setItem("expenseAmount", document.getElementById("expenseAmount").value);
-    sessionStorage.setItem("expenseDate", document.getElementById("expenseDate").value);
-    expenseData.expenseAmount = document.getElementById("expenseAmount").value;
-    expenseData.expenseDate = document.getElementById("expenseDate").value;
-    expenseData.expenseCategory = document.getElementById("expenseCategory").value;
-    if (!document.getElementById("variableExpenseTypeDiv").classList.contains("d-none")) {
-        sessionStorage.setItem("variableExpenseType", document.getElementById("variableExpenseType").value);
-        expenseData.expenseType = document.getElementById("variableExpenseType").value;
+    if(expenseValidator()) {
+        let expenseData = {
+            "expenseCategory": "",
+            "expenseAmount": "",
+            "expenseDate": "",
+            "expenseType": "",
+            "id": Date.now()
+        };
+        sessionStorage.setItem("expenseCategory", document.getElementById("expenseCategory").value);
+        sessionStorage.setItem("expenseAmount", document.getElementById("expenseAmount").value);
+        sessionStorage.setItem("expenseDate", document.getElementById("expenseDate").value);
+        expenseData.expenseAmount = document.getElementById("expenseAmount").value;
+        expenseData.expenseDate = document.getElementById("expenseDate").value;
+        expenseData.expenseCategory = document.getElementById("expenseCategory").value;
+        if (!document.getElementById("variableExpenseTypeDiv").classList.contains("d-none")) {
+            sessionStorage.setItem("variableExpenseType", document.getElementById("variableExpenseType").value);
+            expenseData.expenseType = document.getElementById("variableExpenseType").value;
+        }
+        if (!document.getElementById("fixedExpenseTypeDiv").classList.contains("d-none")) {
+            sessionStorage.setItem("fixedExpenseType", document.getElementById("fixedExpenseType").value);
+            expenseData.expenseType = document.getElementById("fixedExpenseType").value;
+        }
+        expensesData.push(expenseData);
+        sessionStorage.setItem("expensesData", JSON.stringify(expensesData));
+        console.log(sessionStorage.getItem("expensesData"));
+        document.getElementById("expenses_form_div").style.display = "none";
+        updateBaseExpenseList();
+        return false;
     }
-    if (!document.getElementById("fixedExpenseTypeDiv").classList.contains("d-none")) {
-        sessionStorage.setItem("fixedExpenseType", document.getElementById("fixedExpenseType").value);
-        expenseData.expenseType = document.getElementById("fixedExpenseType").value;
-    }
-    expensesData.push(expenseData);
-    sessionStorage.setItem("expensesData", JSON.stringify(expensesData));
-    console.log(sessionStorage.getItem("expensesData"));
-    document.getElementById("expenses_form_div").style.display = "none";
-    updateBaseExpenseList();
     return false;
 }
 
 function saveFixedExpenseType() {
     sessionStorage.setItem("fixedExpenseType", fixedExpenseType.value);
+}
+
+function budgetValidator() {
+    let updatedBudget = document.getElementById('budgetValue').value;
+    let monthlyIncome = sessionStorage.getItem("monthlyIncome");
+    if ((updatedBudget < monthlyIncome) && (updatedBudget > getTotalExpense())) {
+        return true;
+    }
+    else {
+        alert("budget should be less than income and greater than total expenses");
+        return false;
+    }
+}
+
+function saveBudgetFormState() {
+    let updatedBudget = document.getElementById('budgetValue').value;
+    let monthlyIncome = sessionStorage.getItem("monthlyIncome");
+    if (budgetValidator()) {
+        sessionStorage.setItem("budgetValue", document.getElementById("budgetValue").value);
+        document.getElementById("budget_form_div").style.display = "none";
+        return false;
+    }
+    return false;
 }
 
 function showExpenseType() {
