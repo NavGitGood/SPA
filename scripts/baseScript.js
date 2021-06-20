@@ -17,6 +17,7 @@ $(document).ready(function () {
     $(".datepicker").each(function () {
         $(this).datepicker();
     });
+    sessionStorage.setItem("expensesData", "[]");
 });
 
 function getCalculations() {

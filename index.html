@@ -17,10 +17,6 @@
 
 <body onload="showIncomeForm()">
 
-    <!-- <div>
-        <button type="button" onclick="showIncomeForm()">Add Income</button>
-    </div> -->
-
     <div id="income_form_div" class="container form-div">
         <form id="income_form" class="modal-content animate" onsubmit="return saveIncomeFormState()">
             <!-- <div class="form-row top2">
@@ -98,10 +94,10 @@
             </div>
             <div class="form-row top2">
                 <div class="col-3">
-                    <label for="inputEmail">Budget Description</label>
+                    <label for="inputBudgetDescription">Budget Description</label>
                 </div>
                 <div class="col">
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    <input type="text" class="form-control" id="inputBudgetDescription" placeholder="Budget Description">
                 </div>
             </div>
             <div class="form-row top2">
@@ -177,15 +173,6 @@
                     </thead>
                     <tbody>
                     </tbody>
-                    <!-- <tfoot>
-                        <tr>
-                            <td colspan="4" style="text-align: left;">
-                                <input type="button" class="btn btn-lg btn-block " id="addrow" value="Add Row" />
-                            </td>
-                        </tr>
-                        <tr>
-                        </tr>
-                    </tfoot> -->
                 </table>
             </div>
         </div>
