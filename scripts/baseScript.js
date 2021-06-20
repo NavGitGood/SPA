@@ -1,5 +1,4 @@
 let modal = document.getElementById('id01');
-// let isLoaded = false;
 
 function openBudgetForm() {
     document.getElementById('budget_form_div').style.display = "block";
@@ -7,26 +6,11 @@ function openBudgetForm() {
 }
 
 function showIncomeForm() {
-    // console.log(isLoaded);
-    // if (!isLoaded) {
-    //     isLoaded = true;
-        document.getElementById('income_form_div').style.display = "block";
-    // }
+    document.getElementById('income_form_div').style.display = "block";
 }
 
 function showExpensesForm() {
     document.getElementById('expenses_form_div').style.display = "block";
-}
-
-function myFunction2() {
-    document.getElementsByTagName("h1")[0].innerHTML = "updated 2"
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
 }
 
 $(document).ready(function () {

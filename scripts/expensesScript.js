@@ -6,7 +6,7 @@ let expensesData = [];
 function getTotalExpense() {
     if (sessionStorage.getItem("expensesData") !== null && JSON.parse(sessionStorage.getItem("expensesData")).length) {
         return JSON.parse(sessionStorage.getItem("expensesData"))
-        .reduce((sum, record) => sum + parseFloat(record.expenseAmount), 0);
+            .reduce((sum, record) => sum + parseFloat(record.expenseAmount), 0);
     }
     else {
         return 0;
@@ -17,15 +17,37 @@ function sortOnExpenseDate(dataToPopulate) {
     return dataToPopulate.sort((a, b) => new Date(b.expenseDate).getTime() - new Date(a.expenseDate).getTime());
 }
 
-function updateExpenseAmount(amount, id) {
-    let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"));
-    dataToUpdate = dataToUpdate.map(record => {
-        if (record.id.toString() === id.toString()) {
-            record.expenseAmount = amount;
+function validateExpenseOnUpdate(value) {
+    let expenseAmount = parseFloat(value);
+    let budgetValue = parseFloat(sessionStorage.getItem("budgetValue"));
+    if (expenseAmount > budgetValue) {
+        alert("expense should be less than budget");
+        return false;
+    }
+    if (sessionStorage.getItem("expensesData") === null || !JSON.parse(sessionStorage.getItem("expensesData")).length) {
+        let totalExpenseIfSaved = getTotalExpense() + expenseAmount;
+        if (totalExpenseIfSaved > budgetValue) {
+            alert("expense should be less than budget");
+            return false;
         }
-        return record;
-    });
-    sessionStorage.setItem("expensesData", JSON.stringify(dataToUpdate));
+    }
+    return true;
+}
+
+function updateExpenseAmount(value, oldvalue, id) {
+    if (validateExpenseOnUpdate(value)) {
+        let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"));
+        dataToUpdate = dataToUpdate.map(record => {
+            if (record.id.toString() === id.toString()) {
+                record.expenseAmount = value;
+            }
+            return record;
+        });
+        sessionStorage.setItem("expensesData", JSON.stringify(dataToUpdate));
+    }
+    else {
+        document.getElementById(id).value = oldvalue;
+    }
     updateBaseExpenseList();
 }
 
@@ -40,7 +62,7 @@ function populateExpensesList() {
         let newRow = $("<tr>");
         let cols = "";
         cols += `<td>${dataRow.expenseType}</td>`;
-        cols += `<td><input type="text" class="no-edit" id="${dataRow.id}" name="expenseAmount" value="${dataRow.expenseAmount}" onchange="updateExpenseAmount(this.value, this.id)" readonly></td>`;
+        cols += `<td><input type="text" class="no-edit" id="${dataRow.id}" name="expenseAmount" value="${dataRow.expenseAmount}" onfocus="this.oldvalue = this.value;" onchange="updateExpenseAmount(this.value, this.oldvalue, this.id)" readonly></td>`;
         cols += `<td>${dataRow.expenseDate}</td>`;
         if (dataRow.expenseCategory === "Fixed") {
             cols += `<td><input type="button" class="ibtnDel btn btn-md btn-light" id="${dataRow.id}" disabled value="Delete"></td>`;
@@ -76,16 +98,16 @@ function updateBaseExpenseList() {
     // keepTop5InBaseExpenseList();
 }
 
-function expenseValidator() {
+function valdateExpenseOnAdd() {
     let expenseAmount = parseFloat(document.getElementById("expenseAmount").value);
     let budgetValue = parseFloat(sessionStorage.getItem("budgetValue"));
-    if(expenseAmount > budgetValue) {
+    if (expenseAmount > budgetValue) {
         alert("expense should be less than budget");
         return false;
     }
     if (sessionStorage.getItem("expensesData") === null || !JSON.parse(sessionStorage.getItem("expensesData")).length) {
         let totalExpenseIfSaved = getTotalExpense() + expenseAmount;
-        if(totalExpenseIfSaved > budgetValue) {
+        if (totalExpenseIfSaved > budgetValue) {
             alert("expense should be less than budget");
             return false;
         }
@@ -94,7 +116,7 @@ function expenseValidator() {
 }
 
 function saveExpensesFormState() {
-    if(expenseValidator()) {
+    if (valdateExpenseOnAdd()) {
         let expenseData = {
             "expenseCategory": "",
             "expenseAmount": "",
@@ -173,18 +195,18 @@ function showExpenseType() {
     }
 }
 
-$("#addrow").on("click", function () {
-    rowCounter++;
-    let newRow = $("<tr>");
-    let cols = "";
-    cols += '<td></td>';
-    cols += '<td></td>';
-    cols += '<td></td>';
+// $("#addrow").on("click", function () {
+//     rowCounter++;
+//     let newRow = $("<tr>");
+//     let cols = "";
+//     cols += '<td></td>';
+//     cols += '<td></td>';
+//     cols += '<td></td>';
 
-    cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
-    newRow.append(cols);
-    $("table.order-list").append(newRow);
-});
+//     cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+//     newRow.append(cols);
+//     $("table.order-list").append(newRow);
+// });
 
 $("table.order-list").on("click", ".ibtnDel", function (event) {
     let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"))
