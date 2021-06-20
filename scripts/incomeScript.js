@@ -4,8 +4,6 @@ function saveIncomeFormState() {
     sessionStorage.setItem("monthlyIncome", monthlyIncome.toString());
     sessionStorage.setItem("budgetValue", budgetValue.toString());
     sessionStorage.setItem("budgetDate", document.getElementById("budgetDate").value);
-    // console.log(sessionStorage.getItem("monthlyIncome"));
-    // console.log(sessionStorage.getItem("budgetDate"));
     document.getElementById("income_form_div").style.display = "none";
     return false;
 }
