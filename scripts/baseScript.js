@@ -22,23 +22,23 @@ $(document).ready(function () {
 
 function getCalculations() {
     let expenses = 0;
-    // let budget = 0;
     if (sessionStorage.getItem("expensesData") !== null && JSON.parse(sessionStorage.getItem("expensesData")).length) {
         expenses = getTotalExpense();
     }
     let income = sessionStorage.getItem("monthlyIncome");
-    // if (sessionStorage.getItem("budgetValue") !== null) {
+    let budgetDate = sessionStorage.getItem("budgetDate");
     let budget = parseFloat(sessionStorage.getItem("budgetValue"));
-    // }
-    // else {
-    //     budget = (income * 4) / 5;
-    // }
     let balance = budget - expenses;
     let savings = income - expenses;
+    document.getElementById("income").innerHTML = income;
     document.getElementById("budget").innerHTML = budget.toString();
     document.getElementById("expenses").innerHTML = expenses.toString();
     document.getElementById("balance").innerHTML = balance.toString();
     document.getElementById("savings").innerHTML = savings.toString();
+
+    // for expense form
+    document.getElementById("budget-description").innerHTML = `Your budget is Rs. ${budget.toString()} and will end on ${budgetDate}`;
+
     return false;
 }
 

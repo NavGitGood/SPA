@@ -33,6 +33,25 @@ form {
   display: none;
 }
 
+.table-div {
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+  width: 70%;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  display: none;
+
+  /* to add scrolling to expenses popup list*/
+  overflow-x:hidden;
+  overflow-y:auto;
+  min-height:200px;
+  max-height:500px;
+}
+
 .base-div {
   margin: 0 auto;
   left: 0;
@@ -53,26 +72,12 @@ form {
   place-items: center;
 }
 
-.table-div {
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  width: 70%;
-  position: absolute;
-  display: grid;
-  place-items: center;
-  z-index: 1;
-  display: none;
-
-  /* to add scrolling to expenses popup list*/
-  overflow-x:hidden;
-  overflow-y:auto;
-  min-height:200px;
-  max-height:500px;
-}
-
 .no-edit {
   border-width:0px;
   border:none;
   background: transparent;
+}
+
+.budget-description-info-label {
+  color: blue;
 }

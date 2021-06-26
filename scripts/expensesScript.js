@@ -17,18 +17,23 @@ function sortOnExpenseDate(dataToPopulate) {
     return dataToPopulate.sort((a, b) => new Date(b.expenseDate).getTime() - new Date(a.expenseDate).getTime());
 }
 
-// validate if expense can be updated on list (value must be less than budget)
-function validateExpenseOnUpdate(value) {
+// validate if expense can be updated on list (value must be less than budget and greater than 0)
+function validateExpenseOnUpdate(value, oldvalue) {
     let expenseAmount = parseFloat(value);
+    let oldExpenseAmount = parseFloat(oldvalue);
     let budgetValue = parseFloat(sessionStorage.getItem("budgetValue"));
-    if (expenseAmount > budgetValue) {
-        alert("expense should be less than budget");
+    if(expenseAmount <= 0) {
+        alert("expense should be greater than 0");
         return false;
     }
-    if (sessionStorage.getItem("expensesData") === null || !JSON.parse(sessionStorage.getItem("expensesData")).length) {
-        let totalExpenseIfSaved = getTotalExpense() + expenseAmount;
+    if (expenseAmount > budgetValue) {
+        alert("expense cannot be greater than budget");
+        return false;
+    }
+    if (JSON.parse(sessionStorage.getItem("expensesData")).length) {
+        let totalExpenseIfSaved = getTotalExpense() + expenseAmount - oldExpenseAmount;
         if (totalExpenseIfSaved > budgetValue) {
-            alert("expense should be less than budget");
+            alert("total expense cannot be greater than budget");
             return false;
         }
     }
@@ -61,18 +66,29 @@ function populateExpensesList() {
     let dataToPopulate = sortOnExpenseDate(JSON.parse(sessionStorage.getItem("expensesData")));
     $("table.order-list tbody").empty();
     dataToPopulate.forEach(dataRow => {
-        let newRow = $("<tr>");
+        let baseListRow = $("<tr>");
+        let allListRow = $("<tr>");
         let cols = "";
         cols += `<td>${dataRow.expenseType}</td>`;
         cols += `<td><input type="text" class="no-edit" id="${dataRow.id}" name="expenseAmount" value="${dataRow.expenseAmount}" onfocus="this.oldvalue = this.value;" onchange="updateExpenseAmount(this.value, this.oldvalue, this.id)" readonly></td>`;
         cols += `<td>${dataRow.expenseDate}</td>`;
         if (dataRow.expenseCategory === "Fixed") {
-            cols += `<td><input type="button" class="ibtnDel btn btn-md btn-light" id="${dataRow.id}" disabled value="Delete"></td>`;
+            cols += `<td><input type="button" class="ibtnDel btn btn-md btn-light" id="${dataRow.id}" disabled title="Fixed expense cannot be deleted" value="Delete"></td>`;
         } else {
             cols += `<td><input type="button" class="ibtnDel btn btn-md btn-danger" id="${dataRow.id}" value="Delete"></td>`;
         }
-        newRow.append(cols);
-        $("table.order-list").append(newRow);
+        // do not add checkbox column in base list
+        baseListRow.append(cols);
+        $("table.base-list").append(baseListRow);
+
+        // add checkbox column in base list
+        if (dataRow.expenseCategory === "Fixed") {
+            cols += `<td><input type="checkbox" name="selectToDelete" disabled id="${dataRow.id}"  title="Fixed expense cannot be selected for deletion" />&nbsp;</td>`;
+        } else {
+            cols += `<td><input type="checkbox" name="selectToDelete" id="${dataRow.id}"/>&nbsp;</td>`;
+        }
+        allListRow.append(cols);
+        $("table.all-list").append(allListRow);
     });
     keepTop5InBaseExpenseList();
     return true
@@ -94,6 +110,7 @@ function keepTop5InBaseExpenseList() {
     if ($("#expenses_base_list > tbody > tr").length > 5) {
         $("#expenses_base_list > tbody > tr").slice(5).remove();
     }
+    // $("#expenses_base_list th:last-child, #expenses_base_list td:last-child").remove()
 }
 
 function updateBaseExpenseList() {
@@ -105,13 +122,13 @@ function validateExpenseOnAdd() {
     let expenseAmount = parseFloat(document.getElementById("expenseAmount").value);
     let budgetValue = parseFloat(sessionStorage.getItem("budgetValue"));
     if (expenseAmount > budgetValue) {
-        alert("expense should be less than budget");
+        alert("expense cannot be greater than budget");
         return false;
     }
-    if (sessionStorage.getItem("expensesData") === null || !JSON.parse(sessionStorage.getItem("expensesData")).length) {
-        let totalExpenseIfSaved = getTotalExpense() + expenseAmount;
+    if (JSON.parse(sessionStorage.getItem("expensesData")).length) {
+        let totalExpenseIfSaved = parseFloat(getTotalExpense()) + expenseAmount;
         if (totalExpenseIfSaved > budgetValue) {
-            alert("expense should be less than budget");
+            alert("total expense cannot be greater than budget");
             return false;
         }
     }
@@ -176,7 +193,7 @@ function showExpenseType() {
     }
 }
 
-// delete expense record which delete button is clicked and update the data
+// delete expense record for which delete button is clicked and update the data
 $("table.order-list").on("click", ".ibtnDel", function (event) {
     let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"))
         .filter(record => record.id.toString() !== $(this).attr('id').toString());
@@ -188,13 +205,22 @@ $("table.order-list").on("click", ".ibtnDel", function (event) {
 
 // validate if budget can be updated to new value (it can never be greater than income and less than total expenses)
 function budgetValidator() {
-    let updatedBudget = document.getElementById('budgetValue').value;
-    let monthlyIncome = sessionStorage.getItem("monthlyIncome");
-    if ((updatedBudget < monthlyIncome) && (updatedBudget > getTotalExpense())) {
+    let updatedBudget = parseFloat(document.getElementById('budgetValue').value);
+    let monthlyIncome = parseFloat(sessionStorage.getItem("monthlyIncome"));
+    let totalExpense = parseFloat(getTotalExpense());
+    if ((updatedBudget <= monthlyIncome) && (updatedBudget >= totalExpense)) {
         return true;
     }
-    else {
-        alert("budget should be less than income and greater than total expenses");
+    else if (updatedBudget > monthlyIncome && updatedBudget < totalExpense) {
+        alert("budget cannot be greater than income and cannot be less than total expenses");
+        return false;
+    }
+    else if (updatedBudget > monthlyIncome) {
+        alert("budget cannot be greater than income");
+        return false;
+    }
+    else if (updatedBudget < totalExpense) {
+        alert("budget cannot be less than total expenses");
         return false;
     }
 }
@@ -207,6 +233,18 @@ function saveBudgetFormState() {
         return false;
     }
     return false;
+}
+
+function deleteMultiFromExpensesList() {
+    let rowsToDelete = [...document.querySelectorAll('input[name="selectToDelete"]:checked')]
+        .map(selected => selected.id);
+    let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"))
+        .filter(record => !rowsToDelete.includes(record.id.toString()));
+        sessionStorage.setItem("expensesData", JSON.stringify(dataToUpdate));
+    console.log("updated expenses data: ", sessionStorage.getItem("expensesData"));
+    [...document.querySelectorAll('input[name="selectToDelete"]:checked')]
+    .forEach(selected => $(selected).closest("tr").remove());    
+    populateExpensesList();
 }
 
 expenseCategory.addEventListener('change', showExpenseType, false);

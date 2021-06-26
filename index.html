@@ -48,7 +48,7 @@
                     <label for="monthlyIncome">Monthly Income</label>
                 </div>
                 <div class="col">
-                    <input type="number" step="any" min="0" class="form-control" placeholder="Enter Monthly Income" id="monthlyIncome"
+                    <input type="number" step="any" min="0.000001" class="form-control" placeholder="Enter Monthly Income" id="monthlyIncome"
                         name="monthlyIncome" required>
                 </div>
             </div>
@@ -94,10 +94,11 @@
             </div>
             <div class="form-row top2">
                 <div class="col-3">
-                    <label for="inputBudgetDescription">Budget Description</label>
+                    <label for="budget-description">Budget Description</label>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" id="inputBudgetDescription" placeholder="Budget Description">
+                    <label id="budget-description" class="budget-description-info-label"></label>
+                    <!-- <input type="text" class="form-control" id="inputBudgetDescription" placeholder="Budget Description"> -->
                 </div>
             </div>
             <div class="form-row top2">
@@ -142,7 +143,7 @@
                     <label for="expenseAmount">Expense Amount</label>
                 </div>
                 <div class="col">
-                    <input type="number" step="any" min="0" class="form-control" placeholder="Enter Expense Amount" id="expenseAmount"
+                    <input type="number" step="any" min="0.000001" class="form-control" placeholder="Enter Expense Amount in Rupees" id="expenseAmount"
                         name="expenseAmount" required>
                 </div>
             </div>
@@ -162,13 +163,16 @@
     <div id="expenses_list_div" class="table-div animate">
         <div class="form-row top2">
             <div class="col">
-                <table id="expenses_list" class="table table-striped order-list">
+                <table id="expenses_list" class="table table-striped table-bordered table-dark order-list all-list">
                     <thead>
                         <tr>
                             <th class="th-sm" scope="col">Type</th>
                             <th class="th-sm" scope="col">Amount</th>
                             <th class="th-sm" scope="col">Date</th>
                             <th class="th-sm" scope="col"></th>
+                            <th class="th-sm" scope="col">
+                                <input type="button" class="btn btn-md btn-danger" value="Delete" id="expenses_list_multi_delete" onclick="deleteMultiFromExpensesList()" title="Delete selected rows">
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -203,7 +207,7 @@
                     <label for="budgetValue">Monthly Budget</label>
                 </div>
                 <div class="col">
-                    <input type="number" step="any" min="0" class="form-control" placeholder="Enter Monthly Budget" id="budgetValue"
+                    <input type="number" step="any" min="0.000001" class="form-control" placeholder="Enter Monthly Budget" id="budgetValue"
                         name="budgetValue" required>
                 </div>
             </div>
@@ -214,14 +218,16 @@
     <div class="container">
         <div class="form-row top2">
             <div class="col">
-                <article class="leaderboard base-div">
-                    <header>
-                        <h1 class="leaderboard__title"><span class="leaderboard__title--top">Forbes</span><span
-                                class="leaderboard__title--bottom">Leaderboard</span></h1>
-                    </header>
+                <article class="info-board base-div">
 
                     <main class="list_items">
-                        <article class="list_item" onclick="openBudgetForm()">
+                        <article class="list_item">
+                            <img src="resources/income.jpg" alt="Income" class="list_item_picture">
+                            <span class="list_name">Income</span>
+                            <span class="list_value" id="income">0.00</span>
+                        </article>
+
+                        <article class="list_item" title="Click to edit budget" onclick="openBudgetForm()">
                             <img src="resources/budget.jpg" alt="Budget" class="list_item_picture">
                             <span class="list_name">Budget</span>
                             <span class="list_value" id="budget">0.00</span>
@@ -251,7 +257,7 @@
         <div class="form-row top5">
             <div class="col">
                 <div id="expenses_base_list_div" class="base-table-div animate">
-                    <table id="expenses_base_list" class="table table-striped order-list">
+                    <table id="expenses_base_list" class="table table-striped order-list base-list">
                         <thead>
                             <tr>
                                 <th class="th-sm" scope="col">Type</th>
@@ -264,12 +270,14 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td style="text-align: left;">
+                                <td style="text-align: center;">
                                     <input type="button" class="btn btn-lg btn-block" id="viewall" value="View All" />
                                 </td>
-                                <td style="text-align: left;">
+                                <td style="text-align: center;">
                                     <input type="button" class="btn btn-lg btn-block" id="addExpense" onclick="showExpensesForm()" value="Add Expense" />
                                 </td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
                             </tr>
