@@ -1,10 +1,10 @@
-.leaderboard {
+.info-board {
 	max-width: 490px;
 	width: 100%;
 	border-radius: 12px;
 }
 
-.leaderboard header {
+.info-board header {
 	--start: 15%;
 	height: 130px;
 	background-image: repeating-radial-gradient(circle at var(--start), transparent 0%, transparent 10%, rgba(54, 89, 219, 0.33) 10%, rgba(54, 89, 219, 0.33) 17%), linear-gradient(to right, #5b7cfa, #3659db);
@@ -14,7 +14,7 @@
 	overflow: hidden;
 }
 
-.leaderboard header .leaderboard__title {
+.info-board header .info-board__title {
 	position: absolute;
 	z-index: 2;
 	top: 50%;
@@ -24,17 +24,17 @@
 	margin: 0;
 }
 
-.leaderboard header .leaderboard__title span {
+.info-board header .info-board__title span {
 	display: block;
 }
 
-.leaderboard header .leaderboard__title--top {
+.info-board header .info-board__title--top {
 	font-size: 24px;
 	font-weight: 700;
 	letter-spacing: 6.5px;
 }
 
-.leaderboard header .leaderboard__title--bottom {
+.info-board header .info-board__title--bottom {
 	font-size: 13px;
 	font-weight: 500;
 	letter-spacing: 3.55px;
@@ -42,7 +42,7 @@
 	transform: translateY(-2px);
 }
 
-.leaderboard header .leaderboard__icon {
+.info-board header .info-board__icon {
 	fill: #fff;
 	opacity: .35;
 	width: 50px;
@@ -107,6 +107,6 @@
 	margin-left: 3px;
 }
 
-.leaderboard {
+.info-board {
 	box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.4);
 }
