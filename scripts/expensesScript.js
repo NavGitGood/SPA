@@ -1,6 +1,13 @@
 let expenseCategory = document.getElementById('expenseCategory');
 let fixedExpenseType = document.getElementById('fixedExpenseType');
 let variableExpenseType = document.getElementById('variableExpenseType');
+let expenseFilter = document.getElementById('expense-type-filter');
+let typeOfFixedExpenses = [
+    "Rent",
+    "EMI",
+    "Grocery",
+    "Bills"
+];
 
 // return total of all the expenses added
 function getTotalExpense() {
@@ -57,14 +64,20 @@ function updateExpenseAmount(value, oldvalue, id) {
     updateBaseExpenseList();
 }
 
+// hide all expenses list if all rows deleted
+function hideAllExpensesList() {
+    document.getElementById('expenses_list_div').style.display = "none";
+}
+
 // populate data in all expenses list
 function populateExpensesList() {
+    $("table.order-list tbody").empty();
     if (sessionStorage.getItem("expensesData") === null || !JSON.parse(sessionStorage.getItem("expensesData")).length) {
         console.log("no data saved");
+        hideAllExpensesList();
         return false;
     }
     let dataToPopulate = sortOnExpenseDate(JSON.parse(sessionStorage.getItem("expensesData")));
-    $("table.order-list tbody").empty();
     dataToPopulate.forEach(dataRow => {
         let baseListRow = $("<tr>");
         let allListRow = $("<tr>");
@@ -91,6 +104,7 @@ function populateExpensesList() {
         $("table.all-list").append(allListRow);
     });
     keepTop5InBaseExpenseList();
+    hideOnAllExpensesList();
     return true
 }
 
@@ -193,16 +207,6 @@ function showExpenseType() {
     }
 }
 
-// delete expense record for which delete button is clicked and update the data
-$("table.order-list").on("click", ".ibtnDel", function (event) {
-    let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"))
-        .filter(record => record.id.toString() !== $(this).attr('id').toString());
-    sessionStorage.setItem("expensesData", JSON.stringify(dataToUpdate));
-    console.log("updated expenses data: ", sessionStorage.getItem("expensesData"));
-    $(this).closest("tr").remove();
-    populateExpensesList();
-});
-
 // validate if budget can be updated to new value (it can never be greater than income and less than total expenses)
 function budgetValidator() {
     let updatedBudget = parseFloat(document.getElementById('budgetValue').value);
@@ -247,8 +251,27 @@ function deleteMultiFromExpensesList() {
     populateExpensesList();
 }
 
+function hideOnAllExpensesList() {
+    let selectedValue = expenseFilter.value;
+    if (selectedValue === "Fixed") {
+        let rowsToHide = [...document.querySelectorAll('table#expenses_list > tbody > tr')]
+        .filter(row => !typeOfFixedExpenses.includes(row.getElementsByTagName("td")[0].innerHTML));
+        rowsToHide.forEach(row => $(row).hide());
+    }
+    else if (selectedValue === "Variable") {
+        let rowsToHide = [...document.querySelectorAll('table#expenses_list > tbody > tr')]
+        .filter(row => typeOfFixedExpenses.includes(row.getElementsByTagName("td")[0].innerHTML));
+        rowsToHide.forEach(row => $(row).hide());
+    }
+}
+
+function filterExpenses() {
+    populateExpensesList();
+}
+
 expenseCategory.addEventListener('change', showExpenseType, false);
 fixedExpenseType.addEventListener('change', saveFixedExpenseType, false);
+expenseFilter.addEventListener('change', filterExpenses, false);
 
 // Close all expenses list on pressing Esc key on keyboard
 $(document).keyup(function (e) {
@@ -272,7 +295,34 @@ $("table.order-list").on("blur", "input", function () {
         .siblings("span").text($(this).val());
 });
 
+// make expense value input editable on focus
+$("table#expenses_list").on("focus", "input", function () {
+    $(this)
+        .prop("readonly", false)
+        .removeClass("input-on-blur")
+        .removeClass("no-edit");
+});
+
+// make expense value input readonly on blur
+$("table#expenses_list input[name='expenseAmount']").on("blur", "input", function () {
+    $(this)
+        .prop("readonly", true)
+        .addClass("no-edit")
+        .addClass("input-on-blur")
+        .siblings("span").text($(this).val());
+});
+
 // show all expenses list on click
 $("#viewall").on("click", function () {
     showExpensesList();
+});
+
+// delete expense record for which delete button is clicked and update the data
+$("table.order-list").on("click", ".ibtnDel", function (event) {
+    let dataToUpdate = JSON.parse(sessionStorage.getItem("expensesData"))
+        .filter(record => record.id.toString() !== $(this).attr('id').toString());
+    sessionStorage.setItem("expensesData", JSON.stringify(dataToUpdate));
+    console.log("updated expenses data: ", sessionStorage.getItem("expensesData"));
+    $(this).closest("tr").remove();
+    populateExpensesList();
 });
