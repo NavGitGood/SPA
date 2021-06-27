@@ -17,7 +17,7 @@
     - Savings  : (Income - Expenses)
     - Form to update the Budget (User can increase/decrease the budget ***cannot update date***).
     - Form to add an expense, this contains
-        - Budget Description ***(it is added as label showing budget value and date)***
+        - Budget Description ***(it is added as a label showing budget value and date)***
         - Category-Fixed (Rent, EMI, Grocery, Bills), Variable (all other than fixed)
         - Amount – in Rs.
         - Date – date of the expense.
