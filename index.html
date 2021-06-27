@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="style/popup-modal.css">
     <link rel="stylesheet" href="style/base-modal.css">
     <link rel="stylesheet" href="style/expenses-form.css">
@@ -19,12 +19,6 @@
 
     <div id="income_form_div" class="container form-div">
         <form id="income_form" class="modal-content animate" onsubmit="return saveIncomeFormState()">
-            <!-- <div class="form-row top2">
-                <div class="col">
-                    <span onclick="document.getElementById('income_form_div').style.display='none'" class="close"
-                        title="Close Modal">&times;</span>
-                </div>
-            </div> -->
             <div class="form-row form-title center">
                 <div class="col">
                     <h2>Income Form</h2>
@@ -48,8 +42,8 @@
                     <label for="monthlyIncome">Monthly Income</label>
                 </div>
                 <div class="col">
-                    <input type="number" step="any" min="0.000001" class="form-control" placeholder="Enter Monthly Income" id="monthlyIncome"
-                        name="monthlyIncome" required>
+                    <input type="number" step="any" min="0.000001" class="form-control"
+                        placeholder="Enter Monthly Income" id="monthlyIncome" name="monthlyIncome" required>
                 </div>
             </div>
             <div class="form-row top2">
@@ -143,8 +137,8 @@
                     <label for="expenseAmount">Expense Amount</label>
                 </div>
                 <div class="col">
-                    <input type="number" step="any" min="0.000001" class="form-control" placeholder="Enter Expense Amount in Rupees" id="expenseAmount"
-                        name="expenseAmount" required>
+                    <input type="number" step="any" min="0.000001" class="form-control"
+                        placeholder="Enter Expense Amount in Rupees" id="expenseAmount" name="expenseAmount" required>
                 </div>
             </div>
             <div class="form-row top2">
@@ -166,12 +160,20 @@
                 <table id="expenses_list" class="table table-striped table-bordered table-dark order-list all-list">
                     <thead>
                         <tr>
-                            <th class="th-sm" scope="col">Type</th>
+                            <th class="th-sm" scope="col">Type &nbsp;&nbsp;
+                                <select class="expense-type-filter" id="expense-type-filter">
+                                    <option value="All">All</option>
+                                    <option value="Fixed">Fixed</option>
+                                    <option value="Variable">Variable</option>
+                                </select>
+                            </th>
                             <th class="th-sm" scope="col">Amount</th>
                             <th class="th-sm" scope="col">Date</th>
                             <th class="th-sm" scope="col"></th>
                             <th class="th-sm" scope="col">
-                                <input type="button" class="btn btn-md btn-danger" value="Delete" id="expenses_list_multi_delete" onclick="deleteMultiFromExpensesList()" title="Delete selected rows">
+                                <input type="button" class="btn btn-md btn-danger" value="Delete"
+                                    id="expenses_list_multi_delete" onclick="deleteMultiFromExpensesList()"
+                                    title="Delete selected rows">
                             </th>
                         </tr>
                     </thead>
@@ -207,8 +209,8 @@
                     <label for="budgetValue">Monthly Budget</label>
                 </div>
                 <div class="col">
-                    <input type="number" step="any" min="0.000001" class="form-control" placeholder="Enter Monthly Budget" id="budgetValue"
-                        name="budgetValue" required>
+                    <input type="number" step="any" min="0.000001" class="form-control"
+                        placeholder="Enter Monthly Budget" id="budgetValue" name="budgetValue" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -274,7 +276,8 @@
                                     <input type="button" class="btn btn-lg btn-block" id="viewall" value="View All" />
                                 </td>
                                 <td style="text-align: center;">
-                                    <input type="button" class="btn btn-lg btn-block" id="addExpense" onclick="showExpensesForm()" value="Add Expense" />
+                                    <input type="button" class="btn btn-lg btn-block" id="addExpense"
+                                        onclick="showExpensesForm()" value="Add Expense" />
                                 </td>
                                 <td></td>
                                 <td></td>

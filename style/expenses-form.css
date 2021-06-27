@@ -57,7 +57,6 @@ form {
   left: 0;
   right: 0;
   width: 70%;
-  /* position: absolute; */
   display: grid;
   place-items: center;
 }
@@ -67,7 +66,6 @@ form {
   left: 0;
   right: 0;
   width: 70%;
-  /* position: absolute; */
   display: grid;
   place-items: center;
 }
@@ -80,4 +78,22 @@ form {
 
 .budget-description-info-label {
   color: blue;
+}
+
+.expense-type-filter {
+  border: 1px solid #fff;
+  background-color: transparent;
+  color:white;
+  font-weight: bold;
+}
+
+.expense-type-filter option {
+  background-color: rgb(14, 1, 1);
+  color:white;
+  font-weight: bold;
+}
+
+.input-on-blur, table#expenses_list input[name='expenseAmount']:not(:focus) {
+  color:white;
+  font-weight: bold;
 }
